@@ -28,11 +28,17 @@ const setupServer = () => {
   });
 
   app.get("/contacts/:id", async(req, res) => {
-    const data = await contactsServices.getAllContacts();
+    const {id} = req.params;
+    const data = await contactsServices.getContactById(id);
 
+    if(!data) {
+        return res.status(404).json({
+            message: 'Contact not found',
+        });
+    };
     res.json({
         status: 200,
-        message: "Successfully found contacts!",
+        message: `Successfully found contact with id ${id}!`,
         data
     });
   });
