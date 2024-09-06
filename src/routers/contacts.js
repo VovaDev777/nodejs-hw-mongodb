@@ -17,4 +17,6 @@ contactsRouter.post("/", ctrlWrapper(addContactController));
 
 contactsRouter.patch("/:id", ctrlWrapper(patchContactController));
 
+contactsRouter.delete("/:id", ctrlWrapper());
+
 export default contactsRouter;

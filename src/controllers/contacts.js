@@ -51,3 +51,7 @@ export const patchContactController =  async(req, res) => {
 	data: result.data,
   });
 };
+
+export const deleteContactController =  async(req, res) => {
+  
+};
