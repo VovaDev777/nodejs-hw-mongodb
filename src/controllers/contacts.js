@@ -36,7 +36,6 @@ export const addContactController = async(req, res) => {
   });
 };
 
-
 export const patchContactController =  async(req, res) => {
   
   const {id} = req.params;
