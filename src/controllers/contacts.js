@@ -62,18 +62,3 @@ export const deleteContactController =  async(req, res) => {
   res.status(204).send();
 };
 
-export const films =  async(req, res) => {
-  
-  const {id} = req.params;
-  const result = await contactsServices.updateContact({_id: id}, req.body);
-
-  if (!result) {
-    throw createHttpError(404, "Contact not found");
-  }
-
-  res.json({
-    status: 200,
-	message: "Successfully patched a contact!",
-	data: result.data,
-  });
-};
