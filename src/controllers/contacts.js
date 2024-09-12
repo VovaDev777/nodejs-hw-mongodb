@@ -3,6 +3,7 @@ import createHttpError from 'http-errors';
 
 export const getAllContactsController = async (req, res, next) => {
   const data = await contactsServices.getAllContacts();
+  
 
   res.json({
     status: 200,
