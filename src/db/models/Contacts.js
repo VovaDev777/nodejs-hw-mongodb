@@ -28,4 +28,6 @@ const contactsSchema = new Schema({
 
 const Contacts = model("contacts", contactsSchema);
 
+export const sortFields = ["name", "email", "isFavourite"];
+
 export default Contacts;
