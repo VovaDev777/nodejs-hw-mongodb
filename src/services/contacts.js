@@ -4,5 +4,3 @@ export const getAllContacts = () => Contacts.find();
 
 export const getContactById = id => Contacts.findById(id);
 
-
-export const getContactById = id => Contacts.findById(id);
