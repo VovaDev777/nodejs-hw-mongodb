@@ -17,5 +17,6 @@ export const signup = async (payload) => {
 };
 
 export const signin = async (payload) => {
-    
+    const {email, password} = payload;
+    const user = await UserCollection.findOne()
 };
