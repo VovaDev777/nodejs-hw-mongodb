@@ -1,5 +1,5 @@
 import createHttpError from "http-errors";
-import authServices from "../services/auth.js";
+import * as authServices from "../services/auth.js";
 
 const authenicate = async(req, res, next) => {
     const {authorization} = req.headers;
@@ -25,6 +25,7 @@ const authenicate = async(req, res, next) => {
      if (!user) {
         return next(createHttpError(401, "User not found"));
      }
+     req.user = user;
      next();
 };
 
