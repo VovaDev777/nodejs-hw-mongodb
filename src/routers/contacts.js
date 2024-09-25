@@ -13,8 +13,11 @@ import {
   contactsPatchSchema,
 } from '../validation/contacts.js';
 import isValidId from '../middlewares/isValidId.js';
+import authenicate from '../middlewares/authenicate.js';
 
 const contactsRouter = Router();
+
+contactsRouter.use(authenicate);
 
 contactsRouter.get('/', ctrlWrapper(getAllContactsController));
 
