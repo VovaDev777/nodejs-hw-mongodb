@@ -16,7 +16,7 @@ export const getContacts = async ({
     .sort({ [sortBy]: sortOrder });
 
     if(userId) {
-      Contacts.where("userId").eq(userId);
+     return Contacts.where("userId").equals(userId);
   }
 
 
