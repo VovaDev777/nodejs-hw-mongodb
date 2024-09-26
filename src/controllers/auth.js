@@ -1,4 +1,4 @@
-import createHttpError from 'http-errors';
+// import createHttpError from 'http-errors';
 import * as authServices from '../services/auth.js';
 
 const setupSession = (res, session) => {
@@ -53,4 +53,16 @@ export const refreshController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+};
+
+export const logoutController = async (req, res) => {
+  const {sessionId} = req.cookies;
+  if (!sessionId) {
+    await authServices.logout(sessionId);
+  }
+
+  res.clearCookie("sessionId");
+  res.clearCookie("refreshToken");
+
+  res.status(204).send();
 };
