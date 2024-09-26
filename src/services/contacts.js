@@ -32,7 +32,7 @@ export const getContacts = async ({
   };
 };
 
-export const getContactById = (id) => Contacts.findById(id);
+export const getContact = filter => Contacts.findById(filter);
 
 export const createContact = (payload) => Contacts.create(payload);
 
