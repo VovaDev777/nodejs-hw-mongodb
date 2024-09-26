@@ -57,7 +57,7 @@ export const refreshController = async (req, res) => {
 
 export const logoutController = async (req, res) => {
   const {sessionId} = req.cookies;
-  if (!sessionId) {
+  if (sessionId) {
     await authServices.logout(sessionId);
   }
 
