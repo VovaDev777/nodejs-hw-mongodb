@@ -2,13 +2,15 @@ import UserCollection from '../db/models/User.js';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import SessionCollection from '../db/models/Session.js';
-import {randomBytes} from "crypto";
-import { accessTokenLifeTime, refreshTokenLifeTime } from '../constants/user.js';
-
+import { randomBytes } from 'crypto';
+import {
+  accessTokenLifeTime,
+  refreshTokenLifeTime,
+} from '../constants/user.js';
 
 const createSession = () => {
-  const accessToken = randomBytes(30).toString("base64");
-  const refreshToken = randomBytes(30).toString("base64");
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
   const accessTokenValidUntil = new Date(Date.now() + accessTokenLifeTime);
   const refreshTokenValidUntil = new Date(Date.now() + refreshTokenLifeTime);
 
@@ -19,7 +21,6 @@ const createSession = () => {
     refreshTokenValidUntil,
   };
 };
-
 
 export const signup = async (payload) => {
   const { email, password } = payload;
@@ -51,7 +52,7 @@ export const signin = async (payload) => {
     throw createHttpError(401, 'Email or password is invalid');
   }
 
-  await SessionCollection.deleteOne({userId: user._id});
+  await SessionCollection.deleteOne({ userId: user._id });
 
   const sessionData = createSession();
 
@@ -61,14 +62,14 @@ export const signin = async (payload) => {
   });
 
   return userSession;
-
 };
 
-export const findSessionByAccessToken = accessToken => SessionCollection.findOne({accessToken});
+export const findSessionByAccessToken = (accessToken) =>
+  SessionCollection.findOne({ accessToken });
 
-export const findUser = filter => UserCollection.findOne(filter);
+export const findUser = (filter) => UserCollection.findOne(filter);
 
-export const refreshSession = async({refreshToken, sessionId}) => {
+export const refreshSession = async ({ refreshToken, sessionId }) => {
   const oldSession = await SessionCollection.findOne({
     _id: sessionId,
     refreshToken,
@@ -79,7 +80,7 @@ export const refreshSession = async({refreshToken, sessionId}) => {
   if (new Date() > oldSession.refreshTokenValidUntil) {
     throw createHttpError(401, 'Session token expired');
   }
-  await SessionCollection.deleteOne({_id: sessionId});
+  await SessionCollection.deleteOne({ _id: sessionId });
 
   const sessionData = createSession();
 
