@@ -9,18 +9,21 @@ export const getContacts = async ({
   sortOrder = contactSortList[0],
   userId,
 }) => {
+  
   const skip = (page - 1) * perPage;
-  const data = await Contacts.find()
+
+  const filter = {};
+  if (userId) {
+    filter.userId = userId; 
+  }
+  const data = await Contacts.find(filter)
     .skip(skip)
     .limit(perPage)
     .sort({ [sortBy]: sortOrder });
 
-    if(userId) {
-     return Contacts.where("userId").equals(userId);
-  }
+    console.log(Contacts);
 
-
-  const count = await Contacts.find().countDocuments();
+  const count = await Contacts.find(filter).countDocuments();
   const paginationData = calculatePaginationData({ count, perPage, page });
 
   return {
@@ -32,7 +35,9 @@ export const getContacts = async ({
   };
 };
 
-export const getContact = filter => Contacts.findById(filter);
+export const getContact = async (filter) => {
+  return await Contacts.findOne(filter); 
+};
 
 export const createContact = (payload) => Contacts.create(payload);
 
