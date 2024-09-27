@@ -35,9 +35,7 @@ export const getContacts = async ({
   };
 };
 
-export const getContact = async (filter) => {
-  return await Contacts.findOne(filter); 
-};
+export const getContact = filter => Contacts.findOne(filter);
 
 export const createContact = (payload) => Contacts.create(payload);
 

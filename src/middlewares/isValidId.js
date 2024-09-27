@@ -6,6 +6,7 @@ const isValidId = (req,res,next) => {
     if(!isValidObjectId(id)) {
         return next(createHttpError(404, `${id} is not valid`));
     }
+    next();
 };
 
 export default isValidId;
