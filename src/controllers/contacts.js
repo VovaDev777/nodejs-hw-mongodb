@@ -3,6 +3,13 @@ import createHttpError from 'http-errors';
 import parsePaginationParams from '../utils/parsePaginationParams.js';
 import parseSortParams from '../utils/parseSortParams.js';
 import { sortFields } from '../db/models/Contacts.js';
+import saveFileToUploadDir from '../utils/saveFileToUploadDir.js';
+import saveToCloudinary from '../utils/saveToCloudinary.js';
+import { env } from '../utils/env.js';
+
+
+const enableCloudinary = env("ENABLE_CLOUDINARY");
+
 
 export const getAllContactsController = async (req, res, next) => {
   const { perPage, page } = parsePaginationParams(req.query);
@@ -41,18 +48,25 @@ export const getContactByIdController = async (req, res, next) => {
 };
 
 export const addContactController = async (req, res) => {
+  let photo;
+  if (req.file) {
+    if(enableCloudinary === "true") {
+      photo = await saveToCloudinary(req.file, "photo");
+    } else {
+      photo =  await saveFileToUploadDir(req.file);
+    }
+  }
+  // console.log(req.body);
+  // console.log(req.file);
+  const { _id: userId } = req.user;
 
-  console.log(req.body);
-  console.log(req.file);
-  // const { _id: userId } = req.user;
+  const data = await contactsServices.createContact({ ...req.body, userId, photo});
 
-  // const data = await contactsServices.createContact({ ...req.body, userId });
-
-  // res.status(201).json({
-  //   status: 201,
-  //   message: 'Successfully created a contact!',
-  //   data,
-  // });
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully created a contact!',
+    data,
+  });
 };
 
 export const patchContactController = async (req, res) => {
