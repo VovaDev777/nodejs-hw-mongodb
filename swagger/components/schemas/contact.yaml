@@ -29,11 +29,11 @@ properties:
   contactType:
     description: 'Type of contact'
     type: string
-    enum: ['male', 'female', 'other']
+    enum: ["work", "home", "personal"]
   photo:
     description: "contact's image"
     type: string
-    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+    example: 'https://res.cloudinary.com/uqwgdu/image/upload/image.png'
   userId:
     description: ""
     type: string

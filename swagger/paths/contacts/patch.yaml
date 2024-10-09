@@ -1,19 +1,22 @@
 tags:
   - Contacts
-summary: Create contact
-operationId: createContact
-description: 'Create a contact with payload'
+summary: Update a contact
+operationId: updateContact
+description: 'Update an existing contact by providing new values for the fields you want to update.'
 security:
   - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    schema:
+      type: string
+    description: The ID of the contact to be updated.
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
-        required:
-          - name
-          - phoneNumber
-          - contactType
         properties:
           name:
             description: "Contact's title"
@@ -24,24 +27,27 @@ requestBody:
             type: string
             example: '+399843543'
           email:
-            description: "Contact's phone number"
+            description: "Contact's email address"
             type: string
-            example: 'dskjfbk@gmail.com'
+            example: 'john@example.com'
           isFavourite:
-            description: 'Is contact favorite'
+            description: 'Is the contact a favorite'
             type: boolean
-            example: false
+            example: true
           contactType:
             description: "Type of number"
             type: string
             enum: ["work", "home", "personal"]
           photo:
-              description: "Link to contact's photo"
-              type: string
-              example: binary
+            description: "Link to contact's photo"
+            type: string
+            example: 'https://res.cloudinary.com/uqwgdu/image/upload/image.png'
+      required:
+        - contactId
+      description: JSON payload for the contact fields you want to update.
 responses:
-  '201':
-    description: Creates a contact
+  '200':
+    description: Successfully updated the contact
     content:
       application/json:
         schema:
@@ -53,12 +59,11 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: Successfully created a contact!
+              example: Successfully updated the contact!
             data:
-              type: object
               $ref: '../../components/schemas/contact.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
