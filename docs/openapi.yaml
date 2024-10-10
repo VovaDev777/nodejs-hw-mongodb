@@ -14,13 +14,16 @@ tags:
     description: Operations about auth.
 servers:
   - url: http://localhost:3000
-  # - url: #посилання на задеплоєний сайт
+  - url: https://nodejs-hw-mongodb-yfkk.onrender.com
 paths:
    /contacts: 
       get:
         $ref: ../swagger/paths/contacts/get.yaml
       post: 
         $ref: ../swagger/paths/contacts/post.yaml
+   /contacts/{contactId}:
+      get: 
+        $ref: ../swagger/paths/contacts/getById.yaml
       patch:
         $ref: ../swagger/paths/contacts/patch.yaml
       delete:
